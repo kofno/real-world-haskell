@@ -43,8 +43,9 @@ isPalindrome xs = xs == (reverse xs)
 lengthSort :: [[a]] -> [[a]]
 lengthSort [] = []
 lengthSort (x:xs) = (lengthSort lesser) ++ [x] ++ (lengthSort greater)
-    where lesser  = [ p | p <- xs, (length p) < (length x)]
-          greater = [ p | p <- xs, (length p) >= (length x)]
+    where lengthx = length x
+          lesser  = [ p | p <- xs, (length p) < lengthx ]
+          greater = [ p | p <- xs, (length p) >= lengthx ]
 
 -- intersperse
 intersperse :: Char -> [[Char]] -> [Char]
@@ -52,4 +53,20 @@ intersperse _ [] = ""
 intersperse c (x:[]) = x
 intersperse c (x:xs) = x ++ [c] ++ (intersperse c xs)
 
--- tree depth [TO BE CONTINUED...]
+-- tree depth
+data BTree a = BNode a (BTree a) (BTree a)
+             | Empty
+               deriving (Show)
+
+btreeDepth :: (Num a, Ord a) => BTree t -> a
+btreeDepth Empty = 0
+btreeDepth (BNode _ left right) =
+    1 + max (btreeDepth left) (btreeDepth right)
+
+emptyBTree = Empty
+shortTree = BNode "root" Empty (BNode "right" Empty Empty)
+complexTree = BNode "root" (BNode "left1" (BNode "left1.l" Empty Empty)
+                                          (BNode "left1.r" Empty Empty))
+                           (BNode "right1" Empty (BNode "right1.r" Empty Empty))
+
+-- 2D points exercises [TO BE CONTINUED...]
