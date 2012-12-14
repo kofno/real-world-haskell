@@ -63,10 +63,16 @@ btreeDepth Empty = 0
 btreeDepth (BNode _ left right) =
     1 + max (btreeDepth left) (btreeDepth right)
 
+-- expect 0
 emptyBTree = Empty
+
+-- expect 2
 shortTree = BNode "root" Empty (BNode "right" Empty Empty)
+
+-- expect 4
 complexTree = BNode "root" (BNode "left1" (BNode "left1.l" Empty Empty)
-                                          (BNode "left1.r" Empty Empty))
+                                          (BNode "left1.r" Empty
+                                                           (BNode "deepest" Empty Empty)))
                            (BNode "right1" Empty (BNode "right1.r" Empty Empty))
 
 -- 2D points exercises [TO BE CONTINUED...]
