@@ -75,4 +75,22 @@ complexTree = BNode "root" (BNode "left1" (BNode "left1.l" Empty Empty)
                                                            (BNode "deepest" Empty Empty)))
                            (BNode "right1" Empty (BNode "right1.r" Empty Empty))
 
--- 2D points exercises [TO BE CONTINUED...]
+-- 2D points exercises
+data Point2D = Point2D Int Int
+               deriving (Show)
+
+data Direction = DStrait
+               | DLeft
+               | DRight
+                 deriving (Show)
+
+turn :: Point2D -> Point2D -> Point2D -> Direction
+turn (Point2D x1 y1) (Point2D x2 y2) (Point2D x3 y3)
+     | crossProduct == 0 = DStrait
+     | crossProduct >  0 = DLeft
+     | crossProduct <  0 = DRight
+     where crossProduct = ((x2 - x1) * (y3 - y1)) - ((y2 - y1) * (x3 -x1))
+
+turns :: [Point2D] -> [Direction]
+turns all@(x:y:z:_) = turn x y z : turns (tail all)
+turns _ = []
